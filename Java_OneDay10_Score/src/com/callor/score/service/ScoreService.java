@@ -89,9 +89,9 @@ public class ScoreService {
 		System.out.println(LinesSerivce.dLines(50));
 
 		this.inputScore(vo);
+		scoreList.add(vo);
 
 		vo.setStrName(strName);
-		scoreList.add(vo);
 
 		System.out.println(LinesSerivce.dLines(50));
 		System.out.printf("%s 학생의 성적이 추가 되었습니다\n", strName);
@@ -106,25 +106,52 @@ public class ScoreService {
 
 	public void inputScore(ScoreVO vo) {
 
-		Integer intScore = null;
+		Integer kor = this.inputKor(vo);
+		if (kor == null) {
+			return;
+		} else {
+			vo.setIntKor(kor);
+		}
 		
-		this.inputKor(vo);
-		this.inputEng(vo);
-		this.inputMath(vo);
-		this.inputSci(vo);
-		this.inputHis(vo);
+		Integer eng = this.inputEng(vo);
+		if (eng == null) {
+			return;
+		} else {
+			vo.setIntEng(eng);
+		}
+		
+		Integer math = this.inputMath(vo);
+		if (math == null) {
+			return;
+		} else {
+			vo.setIntMath(math);
+		}
+		
+		Integer sci = this.inputSci(vo);
+		if (sci == null) {
+			return;
+		} else {
+			vo.setIntSci(sci);
+		}
+		
+		Integer his = this.inputHis(vo);
+		if (his == null) {
+			return;
+		} else {
+			vo.setIntHis(his);
+		}
 
-		intSum = vo.getIntKor() + vo.getIntEng() + vo.getIntMath() + vo.getIntSci() + vo.getIntHis();
+		intSum = kor + eng + math + sci + his;
 		floatAvg = (float) intSum / 5;
 
 		vo.setIntSum(intSum);
 		vo.setFloatAvg(floatAvg);
 
-		totalKor += vo.getIntKor();
-		totalEng += vo.getIntEng();
-		totalMath += vo.getIntMath();
-		totalSci += vo.getIntSci();
-		totalHis += vo.getIntHis();
+		totalKor += kor;
+		totalEng += eng;
+		totalMath += math;
+		totalSci += sci;
+		totalHis += his;
 
 		total = totalKor + totalEng + totalMath + totalSci + totalHis;
 
@@ -151,85 +178,120 @@ public class ScoreService {
 
 	}
 
-	public void inputKor(ScoreVO vo) {
-		
+	private Integer inputKor(ScoreVO vo) {
+
 		while (true) {
 			System.out.print("국어 (0부터 100까지, 입력중단:QUIT) >> ");
 			String strKor = scan.nextLine();
-			Integer intKor = Integer.valueOf(strKor);
-			vo.setIntKor(intKor);
+			Integer intKor = 0;
+			if (strKor.equals("QUIT")) {
+				return null;
+			}
+			try {
+				intKor = Integer.valueOf(strKor);
+			} catch (Exception e) {
+				System.out.println("숫자로만 입력");
+				continue;
+			}
 			if (intKor < 0 || intKor > 100) {
 				System.out.println("0부터 100까지만 입력");
 				continue;
-			} else if(strKor.equals("QUIT")) {
-				return;
-			} else {
-				break;
 			}
-
+			return intKor;
 		}
 	}
 
-	public void inputEng(ScoreVO vo) {
+	private Integer inputEng(ScoreVO vo) {
+
 		while (true) {
 			System.out.print("영어 (0부터 100까지, 입력중단:QUIT) >> ");
 			String strEng = scan.nextLine();
-			Integer intEng = Integer.valueOf(strEng);
-			vo.setIntEng(intEng);
+			Integer intEng = 0;
+			if (strEng.equals("QUIT")) {
+				return null;
+			}
+			try {
+				intEng = Integer.valueOf(strEng);
+			} catch (Exception e) {
+				System.out.println("숫자로만 입력");
+				continue;
+			}
 			if (intEng < 0 || intEng > 100) {
 				System.out.println("0부터 100까지만 입력");
 				continue;
-			} else {
-				break;
 			}
+			return intEng;
 		}
 
 	}
 
-	public void inputMath(ScoreVO vo) {
+	private Integer inputMath(ScoreVO vo) {
+
 		while (true) {
 			System.out.print("수학 (0부터 100까지, 입력중단:QUIT) >> ");
 			String strMath = scan.nextLine();
-			Integer intMath = Integer.valueOf(strMath);
-			vo.setIntMath(intMath);
+			Integer intMath = 0;
+			if (strMath.equals("QUIT")) {
+				return null;
+			}
+			try {
+				intMath = Integer.valueOf(strMath);
+			} catch (Exception e) {
+				System.out.println("숫자로만 입력");
+				continue;
+			}
 			if (intMath < 0 || intMath > 100) {
 				System.out.println("0부터 100까지만 입력");
 				continue;
-			} else {
-				break;
 			}
+			return intMath;
 		}
 
 	}
 
-	public void inputSci(ScoreVO vo) {
+	private Integer inputSci(ScoreVO vo) {
+
 		while (true) {
 			System.out.print("과학 (0부터 100까지, 입력중단:QUIT) >> ");
 			String strSci = scan.nextLine();
-			Integer intSci = Integer.valueOf(strSci);
-			vo.setIntSci(intSci);
+			Integer intSci = 0;
+			if (strSci.equals("QUIT")) {
+				return null;
+			}
+			try {
+				intSci = Integer.valueOf(strSci);
+			} catch (Exception e) {
+				System.out.println("숫자로만 입력");
+			}
 			if (intSci < 0 || intSci > 100) {
 				System.out.println("0부터 100까지만 입력");
 				continue;
-			} else {
-				break;
 			}
+			return intSci;
 		}
+
 	}
 
-	public void inputHis(ScoreVO vo) {
+	private Integer inputHis(ScoreVO vo) {
+
 		while (true) {
-			System.out.print("역사 (0부터 100까지, 입력중단:QUIT) >> ");
+			System.out.print("국사 (0부터 100까지, 입력중단:QUIT) >> ");
 			String strHis = scan.nextLine();
-			Integer intHis = Integer.valueOf(strHis);
-			vo.setIntHis(intHis);
+			Integer intHis = 0;
+			if (strHis.equals("QUIT")) {
+				return null;
+			}
+			try {
+				intHis = Integer.valueOf(strHis);
+			} catch (Exception e) {
+				System.out.println("숫자로만 입력");
+			}
 			if (intHis < 0 || intHis > 100) {
 				System.out.println("0부터 100까지만 입력");
 				continue;
-			} else {
-				break;
 			}
+			return intHis;
 		}
-	}
 
+	}
 }
